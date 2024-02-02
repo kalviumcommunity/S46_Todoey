@@ -2,6 +2,8 @@ const express = require('express')
 require('dotenv').config()
 const mongoose = require('mongoose')
 
+const todoRoutes = require('./routes/todoList')
+
 const PORT = 3001
 
 const app = express()
@@ -23,17 +25,7 @@ app.use((req, res, next) => {
     next()
 })
 
-app.get('/api', (req, res) => {
-    res.status(200).json({'Connected to DB': dbConnection()})
-})
-
-app.post('/api', (req, res) => {
-    res.status(200).json({'Success': 'Recieved request'})
-})
-
-app.put('/api', (req, res) => {
-    res.status(200).json({'Success': 'Recieved request'})
-})
+app.use('/api/todo', todoRoutes)
 
 app.listen(PORT, () => {
     connectToDB()
