@@ -1,10 +1,14 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 
-function AddTaskModal(props) {
+function EditTaskModal(props) {
 
   const [text, setText] = useState('')
   const [isEmpty, setIsEmpty] = useState(false)
+
+  useEffect(() => {
+    setText(props.task)
+  },[props])
 
   const handleSubmit = () => {
     if (text == ''){
@@ -20,7 +24,7 @@ function AddTaskModal(props) {
       <div className="w-full shadow-md sm:w-1/4">
         <div className="flex content-center justify-between bg-blue-500 p-4 text-2xl text-white">
           <div>
-            Add Task
+            Edit Task
           </div>
           <div className="cursor-pointer" onClick={props.onPress}>
             &times;
@@ -28,7 +32,7 @@ function AddTaskModal(props) {
         </div>
         <div className="p-4 flex flex-col justify-center content-center flex-wrap bg-white">
           <div className=" my-4">
-            <input type="text" className="border-b-2 hover:border-blue-500 text-center" placeholder="Task" onChange={(e) => setText(e.target.value)}/>
+            <input type="text" className="border-b-2 hover:border-blue-500 text-center" placeholder="Task" onChange={(e) => setText(e.target.value)} value={text}/>
           </div>
           {isEmpty && (
           <div className="bg-red-300 border-2 border-red-700 p-2 text-red-700 flex">
@@ -41,7 +45,7 @@ function AddTaskModal(props) {
           </div>
           )}
           <div className="bg-blue-500 text-white px-4 py-1 my-4 mx-2 text-center text-lg font-semibold cursor-pointer" onClick={handleSubmit}>
-            Add
+            Edit
           </div>
         </div>
       </div>
@@ -49,4 +53,4 @@ function AddTaskModal(props) {
   )
 }
 
-export default AddTaskModal
+export default EditTaskModal
