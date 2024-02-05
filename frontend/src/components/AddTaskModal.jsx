@@ -16,7 +16,7 @@ function AddTaskModal(props) {
   }
 
   return (
-    <div className="absolute top-0 h-full w-full flex content-center flex-wrap justify-center backdrop-blur-sm">
+    <div className="absolute top-0 h-full w-full flex content-center flex-wrap justify-center backdrop-blur-sm z-10">
       <div className="w-full shadow-md sm:w-1/4">
         <div className="flex content-center justify-between bg-blue-500 p-4 text-2xl text-white">
           <div>
@@ -26,8 +26,8 @@ function AddTaskModal(props) {
             &times;
           </div>
         </div>
-        <div className="m-4 flex flex-col justify-center content-center flex-wrap">
-          <div className="bg-white my-4">
+        <div className="p-4 flex flex-col justify-center content-center flex-wrap bg-white">
+          <div className=" my-4">
             <input type="text" className="border-b-2 hover:border-blue-500 text-center" placeholder="Task" onChange={(e) => setText(e.target.value)}/>
           </div>
           {isEmpty && (
