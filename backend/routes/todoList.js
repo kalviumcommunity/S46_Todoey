@@ -5,7 +5,7 @@ const Task = require("../models/taskModel");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const tasks = await Task.find({}).sort({createdAt: -1});
+  const tasks = await Task.find({}).sort({ createdAt: -1 });
   res.status(200).json(tasks);
 });
 
@@ -20,12 +20,24 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/", (req, res) => {
-  res.status(200).json({ PUT: "Put req sent" });
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { updatedTask } = req.body;
+
+  try {
+    const task = await Task.findByIdAndUpdate({ _id: id }, updatedTask);
+    res.status(200).json(task);
+  } catch (e) {
+    res.status(400).json(e);
+  }
 });
 
-router.delete("/", (req, res) => {
-  res.status(200).json({ DELETE: "Delete req sent" });
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const task = await Task.findOneAndDelete({ _id: id });
+
+  res.status(200).json(task);
 });
 
 module.exports = router;
