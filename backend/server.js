@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const todoRoutes = require("./routes/todoList");
+const userRoutes = require("./routes/user")
 
 const PORT = 3001;
 
@@ -18,6 +19,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/todo", todoRoutes);
+app.use("/api/user", userRoutes)
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
   console.log("Connected to DB");
