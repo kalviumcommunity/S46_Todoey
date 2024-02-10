@@ -19,34 +19,34 @@ router.post("/signup", async (req, res) => {
   if (!user) {
     const hashedPassword = await hash(password);
     const newUser = await User.create({ email, password: hashedPassword });
-    return res.status(200).json({ newUser });
+    return res.status(200).json(newUser);
   }
 
-  res.status(400).json({ ERROR: "User already exists" });
+  res.status(400).json({ error: "User already exists" });
 });
 
 router.post("/login", async (req, res) => {
-    const { error, value } = userValidator(req.body);
+  const { error, value } = userValidator(req.body);
 
-    if (error) {
-        return res.status(400).send(error.details)
+  if (error) {
+    return res.status(400).send(error.details);
+  }
+
+  const { email, password } = value;
+
+  const user = await User.findOne({ email });
+
+  if (user) {
+    const hashedPassword = user.password;
+    const passwordIsCorrect = await verify(password, hashedPassword);
+
+    if (passwordIsCorrect) {
+      return res.status(200).json(user);
     }
+    return res.status(400).json({ error: "Incorrect password" });
+  }
 
-    const { email, password } = value
-    
-    const user = await User.findOne({ email })
-    
-    if (user) {
-        const hashedPassword = user.password
-        const passwordIsCorrect = await verify(password, hashedPassword)
-
-        if (passwordIsCorrect) {
-            return res.status(200).json({"Success":'Login Successful'})
-        }
-        return res.status(400).json({'ERROR':'Incorrect password'})
-    }
-
-    res.status(400).json({'ERROR':'User not available'})
-})
+  res.status(400).json({ error: "User not available" });
+});
 
 module.exports = router;
