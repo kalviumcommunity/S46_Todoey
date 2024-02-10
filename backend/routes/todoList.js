@@ -1,17 +1,23 @@
 const express = require("express");
 const Task = require("../models/taskModel");
+const { verifyToken } = require("../extras/auth");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const tasks = await Task.find({}).sort({ createdAt: -1 });
-  res.status(200).json(tasks);
+  const { token } = req.headers;
+  if (token) {
+    const userId = await verifyToken(token);
+    const tasks = await Task.find({ userId }).sort({ createdAt: -1 });
+    res.status(200).send(tasks);
+  }
 });
 
 router.post("/", async (req, res) => {
-  const { task } = req.body;
+  const { task, token } = req.body;
+  const userId = await verifyToken(token);
 
   try {
-    const newTask = await Task.create({ task, isChecked: false });
+    const newTask = await Task.create({ task, isChecked: false, userId });
     res.status(200).json({ POST: newTask });
   } catch (e) {
     console.log(`Error: ${e}`);

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Login() {
+function Login({onLogin}) {
   const [error, setError] = useState({});
   const [showError, setShowError] = useState(false);
   const [loginError, setLoginError] = useState(null);
@@ -22,13 +22,12 @@ function Login() {
             password: values.password,
           })
           .then((res) => {
-            console.log(res.data);
             const userData = res.data;
-            localStorage.setItem("User", userData.email);
+            localStorage.setItem("User", JSON.stringify(userData));
+            onLogin(userData)
             navigate("/");
           })
           .catch((err) => {
-            console.log(err.response.data.error);
             setLoginError(err.response.data.error);
           });
       }

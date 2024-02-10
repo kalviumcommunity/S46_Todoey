@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function AddTaskModal({ onPress, addTask }) {
+function AddTaskModal({ onPress, addTask, token }) {
   const [text, setText] = useState("");
   const [isEmpty, setIsEmpty] = useState(false);
 
@@ -9,7 +9,7 @@ function AddTaskModal({ onPress, addTask }) {
       setIsEmpty(true);
     } else {
       setIsEmpty(false);
-      addTask(text);
+      addTask(text, token);
       onPress();
     }
   };
