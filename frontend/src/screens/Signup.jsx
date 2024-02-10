@@ -1,12 +1,14 @@
 import { useFormik } from "formik";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Signup() {
+function Signup({ onSignup }) {
   const [error, setError] = useState({});
   const [showError, setShowError] = useState(false);
   const [signupError, setSignupError] = useState(null);
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: { email: "", password: "", rePassword: "" },
@@ -20,12 +22,12 @@ function Signup() {
             password: values.password,
           })
           .then((res) => {
-            console.log(res.data);
             const userData = res.data;
-            localStorage.setItem("User", userData.email);
+            localStorage.setItem("User", JSON.stringify(userData));
+            onSignup(userData);
+            navigate("/");
           })
           .catch((err) => {
-            console.log(err.response.data.error);
             setSignupError(err.response.data.error);
           });
       }
