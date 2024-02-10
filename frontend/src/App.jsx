@@ -1,14 +1,18 @@
-import Navbar from "./components/Navbar"
-import Tasks from "./components/Tasks"
+import Home from "./screens/Home";
+import { Route, Routes } from "react-router-dom";
+import Login from "./screens/Login";
+import Signup from "./screens/Signup";
 
 function App() {
-
   return (
     <div className="app">
-      <Navbar />
-      <Tasks />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
