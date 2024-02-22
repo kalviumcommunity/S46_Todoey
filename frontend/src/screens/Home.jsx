@@ -1,13 +1,18 @@
-import { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
-import Tasks from "../components/Tasks";
+import { useEffect, useState } from 'react';
+import Navbar from '../components/Navbar';
+import Tasks from '../components/Tasks';
 
-function Home({onLogOut}) {
+function Home({ onLogOut }) {
   const [currentUser, setCurrentUser] = useState({});
 
+  function getCookie(name) {
+    let cookieArray = document.cookie.split('; ');
+    let cookie = cookieArray.find((row) => row.startsWith(name + '='));
+    return cookie ? cookie.split('=')[1] : null;
+  }
+
   useEffect(() => {
-    const user = localStorage.getItem("User");
-    setCurrentUser(JSON.parse(user));
+    setCurrentUser(JSON.parse(getCookie('User')));
   }, []);
 
   return (
