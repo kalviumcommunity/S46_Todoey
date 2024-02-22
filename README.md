@@ -9,5 +9,5 @@ Welcome to the Personalized ToDo List application! This simple and customizable 
 - Categories: Organize tasks into categories to streamline your workflow.
 - Customization: Tailor the ToDo List to fit your unique preferences.
 
-API Link : https://api-endpoint-7o2n.onrender.com/api
+API Link : https://api-endpoint-7o2n.onrender.com/api <br>
 Deployed Website Link : https://todoey-bx5.pages.dev/
