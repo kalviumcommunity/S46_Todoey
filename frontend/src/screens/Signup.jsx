@@ -23,8 +23,7 @@ function Signup({ onSignup }) {
           })
           .then((res) => {
             const userData = res.data;
-            localStorage.setItem("User", JSON.stringify(userData));
-            onSignup(userData);
+            onSignup('User', JSON.stringify(userData), 3);
             navigate("/");
           })
           .catch((err) => {
